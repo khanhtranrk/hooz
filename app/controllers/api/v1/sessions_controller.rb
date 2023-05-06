@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Api::V1::SessionsController < ActionController::API
   include JwtAuth::Helpers
   include VerificationHelper
