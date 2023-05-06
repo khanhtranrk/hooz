@@ -56,6 +56,14 @@ class Api::V1::App::BooksController < ApplicationController
              base_url: request.base_url
   end
 
+  def searching
+    keywords = Book.select("name as keyword, 'Keyword' as type")
+                   .where('name ILIKE ?', "%#{params[:query]}%")
+                   .limit(20)
+
+    expose keywords:
+  end
+
   private
 
   def set_book

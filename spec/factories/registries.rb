@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :registery do
+  factory :registry do
     key { "MyString" }
     value { "" }
   end

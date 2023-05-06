@@ -14,10 +14,16 @@ Rails.application.routes.draw do
 
       namespace :app do
         resources :categories, only: %i[index]
+        resources :chapters, only: %i[show]
+        resources :plans, only: %i[index]
+        resources :notifications, only: %i[index]
+        resources :feedbacks, only: %i[create]
+
         resources :books, only: %i[index show] do
           collection do
             get :favorited
             get :read
+            get :searching
           end
 
           member do
@@ -25,7 +31,27 @@ Rails.application.routes.draw do
             delete :unfavorite
           end
         end
-        resources :chapters, only: %i[show]
+
+        resources :documents, only: %[] do
+          collection do
+            get :policy_and_terms
+            get :introduction
+          end
+        end
+
+        resource :user, only: %i[show update] do
+          collection do
+            put :upload_avatar
+            put :change_login_info
+          end
+        end
+
+        resources :purchases, only: %i[index] do
+          collection do
+            get :stripe_key
+            post :card
+          end
+        end
       end
     end
   end

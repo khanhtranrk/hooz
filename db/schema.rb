@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_06_163349) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_06_183320) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -95,6 +95,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_06_163349) do
     t.index ["user_id", "book_id"], name: "index_favorites_on_user_id_and_book_id", unique: true
   end
 
+  create_table "feedbacks", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title", null: false
+    t.text "content", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.jsonb "message", null: false
@@ -119,9 +127,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_06_163349) do
     t.datetime "effective_date"
     t.datetime "expiry_date"
     t.string "payment_method", null: false
-    t.string "status", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "price", null: false
   end
 
   create_table "reading_chapters", force: :cascade do |t|
@@ -137,6 +145,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_06_163349) do
     t.string "key", null: false
     t.jsonb "value", null: false
     t.index ["key"], name: "index_registeries_on_key", unique: true
+  end
+
+  create_table "registries", force: :cascade do |t|
+    t.string "key", null: false
+    t.jsonb "value", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["key"], name: "index_registries_on_key", unique: true
   end
 
   create_table "sessions", force: :cascade do |t|
