@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_05_06_153540) do
+ActiveRecord::Schema[7.0].define(version: 2023_05_06_163349) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -42,6 +42,42 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_06_153540) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "book_categories", force: :cascade do |t|
+    t.bigint "book_id", null: false
+    t.bigint "category_id", null: false
+    t.index ["book_id", "category_id"], name: "index_book_categories_on_book_id_and_category_id", unique: true
+  end
+
+  create_table "books", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "other_names", default: ""
+    t.string "author", default: ""
+    t.text "description", default: ""
+    t.integer "views", default: 0
+    t.integer "favorites", default: 0
+    t.boolean "active", default: false
+    t.boolean "free", default: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "categories", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description", default: ""
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_categories_on_name", unique: true
+  end
+
+  create_table "chapters", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "content", null: false
+    t.bigint "book_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["book_id"], name: "index_chapters_on_book_id", unique: true
+  end
+
   create_table "devices", force: :cascade do |t|
     t.bigint "session_id", null: false
     t.string "exponent_token", null: false
@@ -51,12 +87,56 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_06_153540) do
     t.index ["session_id"], name: "index_devices_on_session_id", unique: true
   end
 
+  create_table "favorites", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "book_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "book_id"], name: "index_favorites_on_user_id_and_book_id", unique: true
+  end
+
   create_table "notifications", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.jsonb "message", null: false
     t.boolean "seen", default: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "plans", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "description", null: false
+    t.float "price", null: false
+    t.integer "value", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_plans_on_name", unique: true
+  end
+
+  create_table "purchases", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "plan_id", null: false
+    t.datetime "effective_date"
+    t.datetime "expiry_date"
+    t.string "payment_method", null: false
+    t.string "status", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reading_chapters", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "book_id", null: false
+    t.bigint "chapter_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id", "book_id"], name: "index_reading_chapters_on_user_id_and_book_id", unique: true
+  end
+
+  create_table "registeries", force: :cascade do |t|
+    t.string "key", null: false
+    t.jsonb "value", null: false
+    t.index ["key"], name: "index_registeries_on_key", unique: true
   end
 
   create_table "sessions", force: :cascade do |t|
