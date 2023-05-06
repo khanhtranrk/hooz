@@ -9,7 +9,7 @@ module JwtAuth
       decoded_token = JwtAuth::JsonWebToken.decode(token)
       @current_user = User.find(decoded_token[:user_id])
 
-      Login.find_by!(user: @current_user, access_token: token)
+      Session.find_by!(user: @current_user, access_token: token)
     rescue JWT::DecodeError
       raise JwtAuth::Errors::Unauthorized, I18n.t('jwt_auth.errors.unauthorized')
     rescue JWT::ExpiredSignature

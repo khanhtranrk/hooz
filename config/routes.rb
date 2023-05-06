@@ -11,6 +11,22 @@ Rails.application.routes.draw do
           post :reset_password
         end
       end
+
+      namespace :app do
+        resources :categories, only: %i[index]
+        resources :books, only: %i[index show] do
+          collection do
+            get :favorited
+            get :read
+          end
+
+          member do
+            post :favorite
+            delete :unfavorite
+          end
+        end
+        resources :chapters, only: %i[show]
+      end
     end
   end
 end
