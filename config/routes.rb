@@ -12,6 +12,25 @@ Rails.application.routes.draw do
         end
       end
 
+      namespace :admin do
+        resources :books do
+          member do
+            put :upload_image
+          end
+
+          resources :chapters do
+            member do
+              put :active
+            end
+          end
+        end
+
+        resources :categories
+        resources :plans
+        resources :feedbacks, only: %i[index]
+        resources :users, only: %i[index show create update]
+      end
+
       namespace :app do
         resources :categories, only: %i[index]
         resources :chapters, only: %i[show]
