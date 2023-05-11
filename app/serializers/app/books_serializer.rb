@@ -4,6 +4,7 @@ class App::BooksSerializer < ActiveModel::Serializer
   attributes :id,
              :name,
              :other_names,
+             :author,
              :description,
              :free,
              :image_url

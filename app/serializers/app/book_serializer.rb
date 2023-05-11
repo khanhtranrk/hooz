@@ -4,11 +4,14 @@ class App::BookSerializer < ActiveModel::Serializer
   attributes :id,
              :name,
              :other_names,
+             :author,
              :description,
              :free,
              :image_url,
              :categories,
-             :chapters
+             :chapters,
+             :reading_chapter,
+             :favorited
 
   attribute :favorited, if: :current_user?
   attribute :reading_chapter, if: :current_user?
