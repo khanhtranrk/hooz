@@ -10,7 +10,8 @@ class Admin::BookSerializer < ActiveModel::Serializer
              :active,
              :description,
              :categories,
-             :image_url
+             :image_url,
+             :free
 
   def image_url
     @instance_options[:base_url] + Rails.application.routes.url_helpers.rails_blob_url(object.image, only_path: true) if object.image.attached?

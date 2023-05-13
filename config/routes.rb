@@ -28,7 +28,8 @@ Rails.application.routes.draw do
         resources :categories
         resources :plans
         resources :feedbacks, only: %i[index]
-        resources :users, only: %i[index show create update]
+        resources :users, only: %i[index show create]
+        resources :users, only: %i[update], constraints: { id: /[^\/]+/ }
       end
 
       namespace :app do

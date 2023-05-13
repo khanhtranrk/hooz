@@ -8,7 +8,7 @@ class Api::V1::App::ChaptersController < ApplicationController
 
     reading_chapter = ReadingChapter.find_by(user_id: @current_user.id, book_id: chapter.book_id)
 
-    if reading_chapter
+    if reading_chapter.present?
       reading_chapter.update!(chapter_id: chapter.id)
     else
       ReadingChapter.create!(user_id: @current_user.id, book_id: chapter.book_id, chapter_id: chapter.id)

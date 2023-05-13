@@ -49,7 +49,9 @@ class Api::V1::App::BooksController < ApplicationController
   end
 
   def read
-    books = Book.where(id: @current_user.reading_chapters.pluck(:book_id), active: true)
+    books = Book.joins("RIGHT JOIN reading_chapters ON reading_chapters.user_id = #{@current_user.id} AND reading_chapters.book_id = books.id")
+                .where(active: true)
+                .order('reading_chapters.updated_at DESC')
 
     paginate books,
              each_serializer: App::BooksSerializer,

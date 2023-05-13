@@ -73,6 +73,8 @@ class Api::V1::Admin::BooksController < ApplicationController
                   :other_names,
                   :author,
                   :description,
+                  :active,
+                  :free,
                   category_ids: []
   end
 end
