@@ -22,6 +22,10 @@ class Book < ApplicationRecord
     def filter(params)
       books = all
 
+      if params[:free].present?
+        books = books.where(free: params[:free])
+      end
+
       if params[:category_ids].present?
         category_ids = params[:category_ids].split(',').map(&:to_i)
         books_ids = BookCategory.where(category_id: category_ids).pluck(:book_id)
