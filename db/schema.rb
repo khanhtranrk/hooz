@@ -140,12 +140,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_06_191035) do
     t.index ["user_id", "book_id"], name: "index_reading_chapters_on_user_id_and_book_id", unique: true
   end
 
-  create_table "registeries", force: :cascade do |t|
-    t.string "key", null: false
-    t.jsonb "value", null: false
-    t.index ["key"], name: "index_registeries_on_key", unique: true
-  end
-
   create_table "registries", force: :cascade do |t|
     t.string "key", null: false
     t.jsonb "value", null: false
@@ -184,15 +178,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_05_06_191035) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["code"], name: "index_verifications_on_code", unique: true
-  end
-
-  create_table "vertifications", force: :cascade do |t|
-    t.string "code", null: false
-    t.datetime "expire_at", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_vertifications_on_user_id", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
