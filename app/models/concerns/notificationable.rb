@@ -8,12 +8,12 @@ module Notificationable
   end
 
   def send_notification(message)
-    Notify::PushJob.perform_later([id], message)
+    Notify::PushJob.perform([id], message)
   end
 
   class_methods do
     def send_notification(message)
-      Notify::PushJob.perform_later(ids, message)
+      Notify::PushJob.perform(ids, message)
     end
   end
 end
