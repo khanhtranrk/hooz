@@ -16,6 +16,7 @@ Rails.application.routes.draw do
         resources :books do
           member do
             put :upload_image
+            put :active
           end
 
           resources :chapters do

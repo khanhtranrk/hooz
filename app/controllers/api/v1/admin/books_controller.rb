@@ -47,7 +47,16 @@ class Api::V1::Admin::BooksController < ApplicationController
   end
 
   def active
-    @book.update!(active_params)
+    @book.update!(active: params[:active])
+
+    if params[:active] && params[:notify]
+      @current_user.send_notification(
+        Noti::Message.new(
+          template: 'book.new',
+          book_name: @book.name
+        ).as_json
+      )
+    end
 
     expose
   end
@@ -63,8 +72,8 @@ class Api::V1::Admin::BooksController < ApplicationController
   end
 
   def active_params
-    params.require(:book)
-          .permit :active
+    params.permit :active,
+                  :notify
   end
 
   def book_params
@@ -73,7 +82,6 @@ class Api::V1::Admin::BooksController < ApplicationController
                   :other_names,
                   :author,
                   :description,
-                  :active,
                   :free,
                   category_ids: []
   end
