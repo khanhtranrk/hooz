@@ -50,7 +50,7 @@ class Api::V1::Admin::BooksController < ApplicationController
     @book.update!(active: params[:active])
 
     if params[:active] && params[:notify]
-      @current_user.send_notification(
+      User.send_notification(
         Noti::Message.new(
           template: 'book.new',
           book_name: @book.name
